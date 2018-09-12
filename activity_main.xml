@@ -1,110 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/timg"
-    tools:context="com.tw.flag.my_sensor.MainActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:background="@color/bg_2"
+    tools:context="com.qu.jian.btremote.MainActivity"
+    android:orientation="vertical">
 
-    <ScrollView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp">
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_mainAty_tip"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:text="手动操作模式"
+        android:textColor="@color/channel_bg"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <ImageButton
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/ic_media_ff"
+                android:layout_weight="1"
+                android:layout_width="60dp"
+                android:visibility="invisible" />
+
+            <Button
+                android:text="F"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_turnForward"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textAllCaps="false"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/ic_media_rew"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <Button
+                android:text="L"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_turnLeft"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="30sp" />
+
+            <Button
+                android:text="S"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_stop"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="30sp" />
+
+            <Button
+                android:text="R"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_turnRight"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <Button
+                android:text="-"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_sub"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="38sp" />
+
+            <Button
+                android:text="B"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_turnBack"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="30sp" />
+
+            <Button
+                android:text="+"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button_add"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="36sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="false"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/layout_channel"
+        android:layout_width="300dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layout_channel">
+
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_weight="0.61"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/channel_Na">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/imv_channel_autoNavigation"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/auto" />
 
             <TextView
+                android:text="交互模式"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView10"
-                android:textColor="@android:color/background_light"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView5"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView4"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
-                android:layout_alignEnd="@+id/textView"
-                android:id="@+id/textView2"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView6"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView7"
-                android:textSize="16sp"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView8"
-                android:textColor="@android:color/background_light"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView9"
-                android:textColor="@android:color/background_light"
-                android:textSize="16sp" />
+                android:id="@+id/textView_Na"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textAlignment="center"
+                android:textSize="14sp" />
         </LinearLayout>
-    </ScrollView>
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/comical"
-        android:id="@+id/imageView"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/channel_Ma">
+
+            <ImageView
+                app:srcCompat="@drawable/manual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imv_channel_manualMode"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="手动操作"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/textView_Ma"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/channel_Gr">
+
+            <ImageView
+                app:srcCompat="@drawable/gravity"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/imv_channel_gravityMode"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="重力感应"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_Gr"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/channel_Re">
+
+            <ImageView
+                app:srcCompat="@drawable/reset"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/imv_channel_resetMode"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="复位模式"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_Re"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/channel_Sitting">
+
+            <ImageView
+                app:srcCompat="@drawable/sitting"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/imv_channel_Sitting"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="@string/sitting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_Sitting"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:text="@string/auto"
+        android:layout_width="60dp"
+        android:id="@+id/button_Auto"
+        android:layout_weight="1"
+        android:background="@android:color/holo_blue_bright"
+        android:textColor="?android:attr/textColorPrimaryNoDisable"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/layout_channel"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentLeft="true"
+        android:layout_width="60dp"
+        android:id="@+id/layout_LeftFunction"
+        android:layout_marginTop="50dp">
+
+        <Button
+            android:text="@string/grab"
+            android:layout_width="match_parent"
+            android:id="@+id/button_grab"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_bright"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:layout_height="50dp" />
+
+        <Button
+            android:text="@string/holderHandServo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/button_holderHandServo"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:background="@android:color/holo_blue_bright" />
+
+        <Button
+            android:text="@string/holderTopServo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/button_holderTopServo"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:background="@android:color/holo_blue_bright" />
+
+        <Button
+            android:text="@string/holderMiddleServo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/button_holderMiddleServo"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:background="@android:color/holo_blue_bright" />
+
+        <Button
+            android:text="@string/holderButtonServo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/button_holderButtonServo"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:background="@android:color/holo_blue_bright" />
+
+        <Button
+            android:text="@string/pantiltTopServo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/button_pantlitTopServo"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:background="@android:color/holo_blue_bright" />
+
+        <Button
+            android:text="@string/pantiltButtonServo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="?android:attr/textColorPrimaryNoDisable"
+            android:id="@+id/button_pantiltButtonServo"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:background="@android:color/holo_blue_bright" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/layout_Masseage"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_speed"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/channel_bg"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_angle"
+            android:textColor="@color/channel_bg"
+            android:textSize="16sp"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/container"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginBottom="60dp">
+
+    </FrameLayout>
+
 
 </RelativeLayout>

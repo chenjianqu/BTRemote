@@ -1,275 +1,734 @@
-package com.tw.flag.my_sensor;
+package com.qu.jian.btremote;
 
-import android.Manifest;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
-                            implements SensorEventListener,
-        LocationListener
-{
+import com.qu.jian.btremote.Aty.Fragment_Interact;
+import com.qu.jian.btremote.Aty.Fragment_gravity;
+import com.qu.jian.btremote.Aty.Fragment_reset;
+import com.qu.jian.btremote.Aty.Fragment_sensor;
+import com.qu.jian.btremote.Aty.Fragment_sitting;
+import com.qu.jian.btremote.Net.BTIOStream;
+import com.qu.jian.btremote.Net.BluetoothConnection;
+import com.qu.jian.btremote.Net.WDIOStream;
+import com.qu.jian.btremote.Net.WifiDirectAdmin;
 
-    SensorManager sensorManager;//传感器管理器
-    Sensor sensorAccelerometer;//加速传感器对象
-    Sensor sensorLight;//光线传感器
-    Sensor sensorProximity;//距离传感器
-    Sensor sensorGyroscope;//陀螺仪
-    Sensor sensorPressure;//气压传感器
-    Sensor sensorGeomagneticfield;//地磁传感器
-    Sensor sensorGrivity;
-    Sensor sensorLinerAcceleration;
-    Sensor sensorOrientation;
-    TextView textView_ac,textView_li,textView_pro,textView_gy,textView_pre,textView_gmf,textView_gr,textView_lac,textView_or,textView_gps;
-    ImageView imageView;
-    Boolean bpro=true,bgy=true,bpre=true,bgmf=true,bac=true,bli=true,bgr=true,blac=true,bor=true;
-    private float sa_x,sa_y,sa_z;
-    private float sa_sum;
-    private float sg_x,sg_y,sg_z;
-    Vibrator vb;
-    private double mx=0;
-    RelativeLayout activityMain;
-    LocationManager locationManager;
+public class MainActivity extends AppCompatActivity{
+
+    private LinearLayout channel_autoNavigation,channel_manual,channel_gravity,channel_reset,channel_sitting,leftFunction;
+    private ImageView imageView_channel_autoNavigation,imageView_channel_manual,imageView_channel_gravity,imageView_channel_reset,imageView_channel_sitting;
+    private TextView txv_channel_Na,txv_channel_Ma,txv_channel_Gr,txv_channel_Re,txv_channel_Sitting;
+    private Button button_grab,button_auto,button_holderHandServo,button_holderTopServo,button_holderMiddleServo,button_holderButtonServo,button_pantiltTopServo,button_pantiltButtonServo;
+    private Button button_turnForward,button_turnBack,button_turnLeft,button_turnRight,button_stop,button_sub,button_add;
+    private TextView textView_speed,textView_angle,textView_mainAty_tip;
+    private SeekBar seekBar;
+    private FragmentManager fragmentManager;
+    private Fragment_reset fragmentReset;
+    private Fragment_gravity fragmentGravity;
+    private Fragment_Interact fragmentInteract;
+    private Fragment_sitting fragmentSitting;
+    private Fragment_sensor fragmentSensor;
+    private BluetoothConnection bluetoothConnection;
+    private BTIOStream btioStream;
+    private WifiDirectAdmin wifiDirectAdmin;
+    private WDIOStream wdioStream;
+    private boolean flag_auto=true;
+    private Vibrator vibrator;
+
+    private String str_auto=null,str_grab=null,str_hand=null,str_armts=null,str_armms=null,str_armbs=null,str_ptts=null,str_ptbs=null,str_f=null,str_b=null,str_s=null,str_l=null,str_r=null,str_manual=null,str_gravity=null,str_interate=null,str_reset=null;
+    private float sb_Max=0,sb_Min=0;
+    private String tpWay=Config.TPWAY_BT_AND_WD;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);//设置手机不随屏幕旋转
-        textView_ac=(TextView)findViewById(R.id.textView);
-        textView_li=(TextView)findViewById(R.id.textView2);
-        textView_pro=(TextView)findViewById(R.id.textView3);
-        textView_gy=(TextView)findViewById(R.id.textView4);
-        textView_pre=(TextView)findViewById(R.id.textView5);
-        textView_gmf=(TextView)findViewById(R.id.textView6);
-        textView_gr=(TextView)findViewById(R.id.textView7);
-        textView_lac=(TextView)findViewById(R.id.textView9);
-        textView_or=(TextView)findViewById(R.id.textView8);
-        textView_gps= (TextView) findViewById(R.id.textView10);
-        imageView=(ImageView)findViewById(R.id.imageView);
-        activityMain=(RelativeLayout) findViewById(R.id.activity_main);
-        locationManager=(LocationManager)getSystemService(LOCATION_SERVICE);
-        String best = locationManager.getBestProvider(new Criteria(), true);
-        if (best != null) {
-            textView_gps.setText("定位信息获取中...");
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this,"无法获得定位权限",Toast.LENGTH_LONG).show();
-                return;
+        Config.forStartAPP(this);//第一次启动时加载的配置
+        createViews();//获取组件实例
+        setConfig();//加载配置
+        registerMyReceiver();//注册广播接收器
+        fragmentManager=getSupportFragmentManager();
+        bluetoothConnection=new BluetoothConnection(this);
+        wifiDirectAdmin=new WifiDirectAdmin(this);
+        vibrator= (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        //组件点击事件
+        setFunctionButtonClick();
+        setChannelButtonClick();
+        setSpeedClick();
+        loadChannelFragment(Config.CHANNEL_AUTO);
+        loadChannelFragment(Config.CHANNEL_MANUAL);
+        loadChannelFragment(Config.CHANNEL_GRAVITY);
+        loadChannelFragment(Config.CHANNEL_SITTING);
+        loadChannelFragment(Config.CHANNEL_RESET);
+    }
+
+
+    private void setConfig() {
+        sb_Min=Config.getCacheFloatConfig(this,Config.KEY_SITTING_SB_MIN);
+        sb_Max=Config.getCacheFloatConfig(this,Config.KEY_SITTING_SB_MAX);
+        str_auto=Config.getCacheStringConfig(this,Config.KEY_SITTING_AUTO);
+        str_grab=Config.getCacheStringConfig(this,Config.KEY_SITTING_GRAB);
+        str_hand=Config.getCacheStringConfig(this,Config.KEY_SITTING_HAND);
+        str_armts=Config.getCacheStringConfig(this,Config.KEY_SITTING_ARMTS);
+        str_armms=Config.getCacheStringConfig(this,Config.KEY_SITTING_ARMMS);
+        str_armbs=Config.getCacheStringConfig(this,Config.KEY_SITTING_ARMBS);
+        str_ptts=Config.getCacheStringConfig(this,Config.KEY_SITTING_PTTS);
+        str_ptbs=Config.getCacheStringConfig(this,Config.KEY_SITTING_PTBS);
+        str_f=Config.getCacheStringConfig(this,Config.KEY_SITTING_F);
+        str_b=Config.getCacheStringConfig(this,Config.KEY_SITTING_B);
+        str_s=Config.getCacheStringConfig(this,Config.KEY_SITTING_S);
+        str_l=Config.getCacheStringConfig(this,Config.KEY_SITTING_L);
+        str_r=Config.getCacheStringConfig(this,Config.KEY_SITTING_R);
+        str_manual=Config.getCacheStringConfig(this,Config.KEY_SITTING_MANUAL);
+        str_gravity=Config.getCacheStringConfig(this,Config.KEY_SITTING_GRAVITY);
+        str_interate=Config.getCacheStringConfig(this,Config.KEY_SITTING_INTERATE);
+        str_reset=Config.getCacheStringConfig(this,Config.KEY_SITTING_RESET);
+        tpWay=Config.getCacheStringConfig(this,Config.KEY_SITTING_TPWAY);
+    }
+
+    private void createViews() {
+        channel_autoNavigation=(LinearLayout)findViewById(R.id.channel_Na);
+        channel_manual=(LinearLayout)findViewById(R.id.channel_Ma);
+        channel_gravity=(LinearLayout)findViewById(R.id.channel_Gr);
+        channel_reset=(LinearLayout)findViewById(R.id.channel_Re);
+        channel_sitting=(LinearLayout)findViewById(R.id.channel_Sitting);
+        imageView_channel_autoNavigation=(ImageView)findViewById(R.id.imv_channel_autoNavigation);
+        imageView_channel_manual=(ImageView)findViewById(R.id.imv_channel_manualMode);
+        imageView_channel_gravity=(ImageView)findViewById(R.id.imv_channel_gravityMode);
+        imageView_channel_reset=(ImageView)findViewById(R.id.imv_channel_resetMode);
+        imageView_channel_sitting=(ImageView)findViewById(R.id.imv_channel_Sitting);
+        txv_channel_Na=(TextView)findViewById(R.id.textView_Na);
+        txv_channel_Ma=(TextView)findViewById(R.id.textView_Ma);
+        txv_channel_Gr=(TextView)findViewById(R.id.textView_Gr);
+        txv_channel_Re=(TextView)findViewById(R.id.textView_Re);
+        txv_channel_Sitting=(TextView)findViewById(R.id.textView_Sitting);
+        button_grab=(Button)findViewById(R.id.button_grab);
+        button_auto=(Button)findViewById(R.id.button_Auto);
+        button_holderHandServo=(Button)findViewById(R.id.button_holderHandServo);
+        button_holderTopServo=(Button)findViewById(R.id.button_holderTopServo);
+        button_holderMiddleServo=(Button)findViewById(R.id.button_holderMiddleServo);
+        button_holderButtonServo=(Button)findViewById(R.id.button_holderButtonServo);
+        button_pantiltTopServo=(Button)findViewById(R.id.button_pantlitTopServo);
+        button_pantiltButtonServo=(Button)findViewById(R.id.button_pantiltButtonServo);
+        button_turnForward=(Button)findViewById(R.id.button_turnForward);
+        button_turnBack=(Button)findViewById(R.id.button_turnBack);
+        button_turnLeft=(Button)findViewById(R.id.button_turnLeft);
+        button_turnRight=(Button)findViewById(R.id.button_turnRight);
+        button_stop=(Button)findViewById(R.id.button_stop);
+        button_sub=(Button)findViewById(R.id.button_sub);
+        button_add=(Button)findViewById(R.id.button_add);
+        textView_angle=(TextView)findViewById(R.id.textView_angle);
+        textView_speed=(TextView)findViewById(R.id.textView_speed);
+        textView_mainAty_tip=(TextView)findViewById(R.id.textView_mainAty_tip);
+        seekBar=(SeekBar)findViewById(R.id.seekBar);
+        leftFunction=(LinearLayout)findViewById(R.id.layout_LeftFunction);
+    }
+
+    //自动导航模式下隐藏部分按键
+    private void hideViews(boolean b){
+        if(b){
+            leftFunction.setVisibility(View.INVISIBLE);
+            button_turnForward.setVisibility(View.INVISIBLE);
+            button_turnBack.setVisibility(View.INVISIBLE);
+            button_turnLeft.setVisibility(View.INVISIBLE);
+            button_turnRight.setVisibility(View.INVISIBLE);
+        }else {
+            leftFunction.setVisibility(View.VISIBLE);
+            button_turnForward.setVisibility(View.VISIBLE);
+            button_turnBack.setVisibility(View.VISIBLE);
+            button_turnLeft.setVisibility(View.VISIBLE);
+            button_turnRight.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    //载入Fragment
+    private void loadChannelFragment(int i) {
+        if(btioStream!=null)sendData(str_s);
+        FragmentTransaction transanction=fragmentManager.beginTransaction();//-用碎片管理器创建碎片事务,用碎片事务来执行碎片的添加,移除,替换,显示,隐藏等操作
+        if(fragmentGravity!=null) transanction.hide(fragmentGravity);//隐藏起来
+        if(fragmentReset!=null)transanction.hide(fragmentReset);
+        if(fragmentInteract!=null)transanction.hide(fragmentInteract);
+        if(fragmentSitting!=null)transanction.hide(fragmentSitting);
+        if(fragmentSensor!=null)transanction.hide(fragmentSensor);
+        switch (i){
+            case Config.CHANNEL_AUTO:
+                selectingChannel(Config.CHANNEL_AUTO);
+                button_auto.setVisibility(View.INVISIBLE);
+                if(fragmentInteract==null){
+                    fragmentInteract=new Fragment_Interact();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable(BluetoothConnection.BLUETOOTHCONNECTION_KEY,bluetoothConnection);//把对象传递过去
+                    fragmentInteract.setArguments(bundle);
+                    transanction.add(R.id.container,fragmentInteract);
+                    transanction.addToBackStack(null);
+                }
+                else transanction.show(fragmentInteract);
+                sendData(str_interate);
+                break;
+            case Config.CHANNEL_MANUAL:
+                selectingChannel(Config.CHANNEL_MANUAL);
+                button_auto.setVisibility(View.VISIBLE);
+                sendData(str_manual);
+                break;
+            case Config.CHANNEL_GRAVITY:
+                selectingChannel(Config.CHANNEL_GRAVITY);
+                button_auto.setVisibility(View.INVISIBLE);
+                if(fragmentGravity==null) {
+                    fragmentGravity=new Fragment_gravity();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable(BluetoothConnection.BLUETOOTHCONNECTION_KEY,bluetoothConnection);//把对象传递过去
+                    fragmentGravity.setArguments(bundle);
+                    transanction.add(R.id.container, fragmentGravity);
+                    transanction.addToBackStack(null);//添加到后退栈里面，按返回键不退出应用
+                }
+                else transanction.show(fragmentGravity);
+                sendData(str_gravity);
+                break;
+            case Config.CHANNEL_RESET:
+                selectingChannel(Config.CHANNEL_RESET);
+                button_auto.setVisibility(View.INVISIBLE);
+                if(fragmentReset==null) {
+                    fragmentReset=new Fragment_reset();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable(BluetoothConnection.BLUETOOTHCONNECTION_KEY,bluetoothConnection);//把对象传递过去
+                    fragmentReset.setArguments(bundle);
+                    transanction.add(R.id.container, fragmentReset);
+                    transanction.addToBackStack(null);//添加到后退栈里面，按返回键不退出应用
+                }
+                else transanction.show(fragmentReset);
+                sendData(str_reset);
+                break;
+            case Config.CHANNEL_SITTING:
+                selectingChannel(Config.CHANNEL_SITTING);
+                button_auto.setVisibility(View.INVISIBLE);
+                if(fragmentSitting==null){
+                    fragmentSitting=new Fragment_sitting();
+                    transanction.addToBackStack(null);
+                    transanction.add(R.id.container,fragmentSitting);
+                }else transanction.show(fragmentSitting);
+                break;
+        }
+        transanction.commit();
+    }
+
+    //选择下方频道的时候，显示的效果
+    private void selectingChannel(int i) {
+        imageView_channel_autoNavigation.setImageResource(R.drawable.auto);
+        imageView_channel_manual.setImageResource(R.drawable.manual);
+        imageView_channel_gravity.setImageResource(R.drawable.gravity);
+        imageView_channel_reset.setImageResource(R.drawable.reset);
+        imageView_channel_sitting.setImageResource(R.drawable.sitting);
+        txv_channel_Na.setTextColor(Color.GRAY);
+        txv_channel_Ma.setTextColor(Color.GRAY);
+        txv_channel_Gr.setTextColor(Color.GRAY);
+        txv_channel_Re.setTextColor(Color.GRAY);
+        txv_channel_Sitting.setTextColor(Color.GRAY);
+        switch (i){
+            case Config.CHANNEL_AUTO:
+                imageView_channel_autoNavigation.setImageResource(R.drawable.auto_1);
+                txv_channel_Na.setTextColor(getResources().getColor(R.color.channel_bg));
+                break;
+            case Config.CHANNEL_MANUAL:
+                imageView_channel_manual.setImageResource(R.drawable.manual_1);
+                txv_channel_Ma.setTextColor(getResources().getColor(R.color.channel_bg));
+                break;
+            case Config.CHANNEL_GRAVITY:
+                imageView_channel_gravity.setImageResource(R.drawable.gravity_1);
+                txv_channel_Gr.setTextColor(getResources().getColor(R.color.channel_bg));
+                break;
+            case Config.CHANNEL_RESET:
+                imageView_channel_reset.setImageResource(R.drawable.reset_1);
+                txv_channel_Re.setTextColor(getResources().getColor(R.color.channel_bg));
+                break;
+            case Config.CHANNEL_SITTING:
+                imageView_channel_sitting.setImageResource(R.drawable.sitting_1);
+                txv_channel_Sitting.setTextColor(getResources().getColor(R.color.channel_bg));
+            default:
+                break;
+        }
+    }
+
+    //当功能按键的时候，按键显示的效果
+    private void selectingFunction(int i){
+        button_grab.setBackgroundColor(Color.WHITE);
+        button_grab.setTextColor(getResources().getColor(R.color.skyblue));
+        button_auto.setBackgroundColor(Color.WHITE);
+        button_auto.setTextColor(getResources().getColor(R.color.skyblue));
+        button_holderHandServo.setBackgroundColor(Color.WHITE);
+        button_holderHandServo.setTextColor(getResources().getColor(R.color.skyblue));
+        button_holderTopServo.setBackgroundColor(Color.WHITE);
+        button_holderTopServo.setTextColor(getResources().getColor(R.color.skyblue));
+        button_holderMiddleServo.setBackgroundColor(Color.WHITE);
+        button_holderMiddleServo.setTextColor(getResources().getColor(R.color.skyblue));
+        button_holderButtonServo.setBackgroundColor(Color.WHITE);
+        button_holderButtonServo.setTextColor(getResources().getColor(R.color.skyblue));
+        button_pantiltTopServo.setBackgroundColor(Color.WHITE);
+        button_pantiltTopServo.setTextColor(getResources().getColor(R.color.skyblue));
+        button_pantiltButtonServo.setBackgroundColor(Color.WHITE);
+        button_pantiltButtonServo.setTextColor(getResources().getColor(R.color.skyblue));
+        button_turnForward.setBackgroundColor(Color.GRAY);
+        button_stop.setBackgroundColor(Color.GRAY);
+        button_turnBack.setBackgroundColor(Color.GRAY);
+        button_turnLeft.setBackgroundColor(Color.GRAY);
+        button_turnRight.setBackgroundColor(Color.GRAY);
+        button_add.setBackgroundColor(Color.GRAY);
+        button_sub.setBackgroundColor(Color.GRAY);
+        switch (i){
+            case Config.FUNCTION_GRAB:
+                button_grab.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_grab.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_HANDS:
+                button_holderHandServo.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_holderHandServo.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_ARMTS:
+                button_holderTopServo.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_holderTopServo.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_ARMMS:
+                button_holderMiddleServo.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_holderMiddleServo.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_ARMBS:
+                button_holderButtonServo.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_holderButtonServo.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_PTTS:
+                button_pantiltTopServo.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_pantiltTopServo.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_PTBS:
+                button_pantiltButtonServo.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_pantiltButtonServo.setTextColor(Color.WHITE);
+                break;
+            case Config.FUNCTION_F:
+                button_turnForward.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                break;
+            case Config.FUNCTION_B:
+                button_turnBack.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                break;
+            case Config.FUNCTION_S:
+                button_stop.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                break;
+            case Config.FUNCTION_L:
+                button_turnLeft.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                break;
+            case Config.FUNCTION_R:
+                button_turnRight.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                break;
+            case Config.FUNCTION_AUTO:
+                button_auto.setBackgroundColor(getResources().getColor(R.color.skyblue));
+                button_auto.setTextColor(Color.WHITE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    //功能组件点击事件
+    private void setFunctionButtonClick(){
+        button_grab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_GRAB);
+                sendData(str_grab);
             }
-            locationManager.requestLocationUpdates(best,3000, (float) 3.0,this);
-        } else {
-            textView_gps.setText("---------------\n定位系统不可用\n或已被禁止使用定位系统\n---------------");
-        }
-
-        sensorManager=(SensorManager)getSystemService(SENSOR_SERVICE);//从系统服务获得传感器管理器
-        sensorAccelerometer=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//获取加速传感器
-        sensorLight=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        sensorProximity=sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        sensorGyroscope=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        sensorPressure=sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
-        sensorGrivity=sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
-        sensorOrientation=sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-        sensorGeomagneticfield=sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        sensorLinerAcceleration=sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        if(sensorGyroscope==null){
-            bgy=false;
-            textView_gy.setText("---------------\n陀螺仪不可用\n---------------");
-        }
-        if(sensorGrivity==null){
-            bgr=false;
-            textView_gr.setText("---------------\n重力传感器不可用\n---------------");
-        }
-        if(sensorPressure==null){
-            bpre=false;
-            textView_pre.setText("---------------\n压力传感器不可用\n---------------");
-        }
-        if(sensorAccelerometer==null){
-            bac=false;
-            textView_ac.setText("---------------\n加速度传感器不可用\n---------------");
-        }
-        if(sensorProximity==null){
-            bpro=false;
-            textView_pro.setText("---------------\n距离传感器不可用\n---------------");
-        }
-        if(sensorGeomagneticfield==null){
-            bgmf=false;
-            textView_gmf.setText("---------------\n地磁传感器不可用\n---------------");
-        }
-        if(sensorLight==null){
-            bli=false;
-            textView_li.setText("---------------\n光线传感器不可用\n---------------");
-        }
-        if(sensorLinerAcceleration==null){
-            blac=false;
-            textView_lac.setText("---------------\n线性加速度传感器不可用\n---------------");
-        }
-        if(sensorOrientation==null){
-            bor=false;
-            textView_or.setText("---------------\n方向传感器不可用\n---------------");
-        }
-        vb=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-
+        });
+        button_auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag_auto) {//为真时表示打开时
+                    flag_auto=false;
+                    selectingFunction(Config.FUNCTION_AUTO);
+                    hideViews(true);
+                    textView_mainAty_tip.setText(R.string.autoNavigation);
+                }else {//进行关闭操作时
+                    flag_auto = true;
+                    hideViews(false);
+                    selectingFunction(Config.FUNCTION_NULL);
+                    textView_mainAty_tip.setText(R.string.manualMode);
+                }
+                sendData(str_auto);
+            }
+        });
+        button_holderHandServo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_HANDS);
+                sendData(str_hand);
+            }
+        });
+        button_holderTopServo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_ARMTS);
+                sendData(str_armts);
+            }
+        });
+        button_holderMiddleServo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_ARMMS);
+                sendData(str_armms);
+            }
+        });
+        button_holderButtonServo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_ARMBS);
+                sendData(str_armbs);
+            }
+        });
+        button_pantiltTopServo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_PTTS);
+                sendData(str_ptts);
+            }
+        });
+        button_pantiltButtonServo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_PTBS);
+                sendData(str_ptbs);
+            }
+        });
+        button_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_S);
+                sendData(str_s);
+            }
+        });
+        button_turnForward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_F);
+                sendData(str_f);
+            }
+        });
+        button_turnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_B);
+                sendData(str_b);
+            }
+        });
+        button_turnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_L);
+                sendData(str_l);
+            }
+        });
+        button_turnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingFunction(Config.FUNCTION_R);
+                sendData(str_r);
+            }
+        });
     }
+
+    //频道按钮点击事件
+    private void setChannelButtonClick(){
+        channel_autoNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingChannel(Config.CHANNEL_AUTO);
+                loadChannelFragment(Config.CHANNEL_AUTO);
+            }
+        });
+        channel_manual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingChannel(Config.CHANNEL_MANUAL);
+                loadChannelFragment(Config.CHANNEL_MANUAL);
+                hideViews(false);
+            }
+        });
+        channel_gravity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingChannel(Config.CHANNEL_GRAVITY);
+                loadChannelFragment(Config.CHANNEL_GRAVITY);
+            }
+        });
+        channel_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingChannel(Config.CHANNEL_RESET);
+                loadChannelFragment(Config.CHANNEL_RESET);
+            }
+        });
+        channel_sitting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectingChannel(Config.CHANNEL_SITTING);
+                loadChannelFragment(Config.CHANNEL_SITTING);
+            }
+        });
+    }
+
+
+    int progress=0;
+    private void setSpeedClick(){
+        button_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progress=seekBar.getProgress();
+                progress+=2;
+                double data=progress/100.0;
+                data=data*(Math.abs(sb_Max)-Math.abs(sb_Min))+sb_Min;
+                seekBar.setProgress(progress);
+                textView_mainAty_tip.setText("发送值："+String.format("%.0f",data));
+                sendData(String.format("%.0f",data));
+            }
+        });
+        button_add.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action=event.getAction();
+                switch (action){
+                    case MotionEvent.ACTION_DOWN:
+                        button_add.setBackgroundColor(getResources().getColor(R.color.channel_bg));
+                        longTouchSendData(Config.SEND_MODE_ADD,true);//长按发送数据
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        button_add.setBackgroundColor(Color.GRAY);
+                        longTouchSendData(Config.SEND_MODE_ADD,false);
+                        break;
+                }
+                return false;
+            }
+        });
+        button_sub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progress=seekBar.getProgress();
+                progress-=2;
+                seekBar.setProgress(progress);
+                double data=progress/100.0;
+                data=data*(Math.abs(sb_Max)-Math.abs(sb_Min))+sb_Min;
+                textView_mainAty_tip.setText("发送值："+String.format("%.0f",data));
+                sendData(String.format("%.0f",data));
+            }
+        });
+        button_sub.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action=event.getAction();
+                switch (action){
+                    case MotionEvent.ACTION_DOWN:
+                        button_sub.setBackgroundColor(getResources().getColor(R.color.channel_bg));
+                        longTouchSendData(Config.SEND_MODE_SUB,true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        button_sub.setBackgroundColor(Color.GRAY);
+                        longTouchSendData(Config.SEND_MODE_SUB,false);
+                        break;
+                }
+                return false;
+            }
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float data=progress/100;
+                data=data*(Math.abs(sb_Max)+Math.abs(sb_Min))+sb_Min;
+                textView_mainAty_tip.setText("发送值："+String.format("%.0f",data));
+                sendData(String.format("%.0f",data));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    private void sendData(String str){
+        if(tpWay.equals(Config.TPWAY_BT_AND_WD)){
+            if(btioStream!=null){
+                btioStream.sendData(str);
+                textView_mainAty_tip.setText("通过蓝牙发送："+str);
+            }else textView_mainAty_tip.setText("未创建输出流");
+        }else if(tpWay.equals(Config.TPWAY_ONLY_WD)){
+            if(wdioStream!=null){
+                wdioStream.sendData(str);
+                textView_mainAty_tip.setText("通过WIFI发送："+str);
+            }else textView_mainAty_tip.setText("未创建输出流");
+        }
+    }
+
+    private void longTouchSendData(char mode,boolean b){
+        if(mode==Config.SEND_MODE_ADD){
+            seekBar.setProgress(progress);
+        }else if(mode==Config.SEND_MODE_SUB){
+            seekBar.setProgress(progress);
+        }
+    }
+
 
     @Override
-    protected void onResume(){
-        super.onResume();
-        if(bac)
-            sensorManager.registerListener(this,sensorAccelerometer,SensorManager.SENSOR_DELAY_NORMAL);//向加速传感器注册监听对像,第三个参数是传感器速度更新的速度，有四个常量可选
-        if(bli)
-            sensorManager.registerListener(this,sensorLight,SensorManager.SENSOR_DELAY_NORMAL);
-        if(bgr)
-            sensorManager.registerListener(this,sensorGrivity,sensorManager.SENSOR_DELAY_NORMAL);
-        if(bpre)
-            sensorManager.registerListener(this,sensorPressure,SensorManager.SENSOR_DELAY_NORMAL);
-        if(bpro)
-            sensorManager.registerListener(this,sensorProximity,SensorManager.SENSOR_DELAY_NORMAL);
-        if(bgy)
-            sensorManager.registerListener(this,sensorGyroscope,SensorManager.SENSOR_DELAY_NORMAL);
-        if(bgmf)
-            sensorManager.registerListener(this,sensorGeomagneticfield,SensorManager.SENSOR_DELAY_NORMAL);
-        if(bor)
-            sensorManager.registerListener(this,sensorOrientation,SensorManager.SENSOR_DELAY_NORMAL);
-        if(blac)
-            sensorManager.registerListener(this,sensorLinerAcceleration,SensorManager.SENSOR_DELAY_NORMAL);
+    protected void onDestroy(){
+        super.onDestroy();
+        if(localBroadcastManager!=null&&broadcastReceiver!=null)localBroadcastManager.unregisterReceiver(broadcastReceiver);
+        if(btioStream!=null)btioStream.closeSocket();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    @Override
-    protected void onPause(){//当切换到其他界面时
-        super.onPause();
-        sensorManager.unregisterListener(this);//取消监听对象的注册
-    }
 
-    //不知道如何同时读取几个传感器的值
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {//加速度值改变时
-        switch (event.sensor.getType()){
-            case Sensor.TYPE_ACCELEROMETER:
-                sa_x=event.values[0];
-                sa_y=event.values[1];
-                sa_z=event.values[2];
-                textView_ac.setText(String.format("---------------\n加速度传感器：\nX轴：%1.2f m/s²\nY轴：%1.2f m/s²\nZ轴：%1.2f m/s²\n---------------",sa_x,sa_y,sa_z));
-                ifShake();
-                break;
-            case Sensor.TYPE_LIGHT:
-                textView_li.setText(String.format("---------------\n光线传感器：%1.2f lx\n---------------",event.values[0]));
-                break;
-            case Sensor.TYPE_PRESSURE:
-                textView_pre.setText(String.format("---------------\n压力传感器：%1.2f hPa\n---------------",event.values[0]));
-                break;
-            case Sensor.TYPE_PROXIMITY:
-                textView_pro.setText(String.format("---------------\n距离传感器：%1.2f cm\n---------------",event.values[0]));
-                break;
-            case Sensor.TYPE_GYROSCOPE:
-                textView_gy.setText(String.format("---------------\n陀螺仪：\nX轴：%1.2f r/s\nY轴：%1.2f r/s\nZ轴：%1.2f r/s\n---------------",event.values[0],event.values[1],event.values[2]));
-                break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                textView_gmf.setText(String.format("---------------\n地磁感应器：\nX轴：%1.2f μT\nY轴：%1.2f μT\nZ轴：%1.2f μT\n---------------",event.values[0],event.values[1],event.values[2]));
-                break;
-            case Sensor.TYPE_GRAVITY:
-                sg_x=event.values[0];
-                sg_y=event.values[1];
-                sg_z=event.values[2];
-                textView_gr.setText(String.format("---------------\n重力感应器：\nX轴：%1.2f m/s²\nY轴：%1.2f m/s²\nZ轴：%1.2f m/s²\n---------------",sg_x,sg_y,sg_z));
-                ifSwing();
-                break;
-            case Sensor.TYPE_LINEAR_ACCELERATION:
-                textView_lac.setText(String.format("---------------\n线性加速度传感器：\nX轴：%1.2f m/s²\nY轴：%1.2f m/s²\nZ轴：%1.2f m/s²\n---------------",event.values[0],event.values[1],event.values[2]));
-                break;
-            case Sensor.TYPE_ORIENTATION:
-                textView_or.setText(String.format("---------------\n方向传感器：\nX轴：%1.2f °\nY轴：%1.2f °\nZ轴：%1.2f °\n---------------",event.values[1],event.values[2],event.values[0]));
-                break;
-        }
-    }
-
-    private void ifSwing() {
-        if(mx==0)
-            mx=(activityMain.getWidth()-imageView.getWidth())/50.0;
-        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-        params.leftMargin=(int)(mx*25-sg_x*25.0/10.0*mx);
-        params.bottomMargin=5;
-        imageView.setLayoutParams(params);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {//精确度改变时不需要处理
-    }
-
-    private void ifShake(){
-        sa_sum=Math.abs(sa_x)+Math.abs(sa_y)+Math.abs(sa_z);
-        if(sa_sum>32){
-            vb.vibrate(2000);
-            Toast.makeText(this,"你摇了一下？",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void updateView(Location location) {//更新UI
-        if (location != null) {
-            String str = "定位提供者:" + location.getProvider();
-            str += String.format("---------------\n%.4f °N\n%.4f °E\n:Heiht:%.2f m\nSpeed:%.2f m/s\n-----", location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed());
-            textView_gps.setText(str);
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {//GPS监听事件
-        String str = "---------------\n定位提供者:" + location.getProvider();
-        str += String.format("\n%.4f °N\n%.4f °E\n:Heiht:%.4f m\nSpeed:%.4f m/s\n---------------", location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed());
-        textView_gps.setText(str);
-    }
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-    @Override
-    public void onProviderEnabled(String provider) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this,"无法获得定位权限",Toast.LENGTH_LONG).show();
-            return;
-        }
-        updateView(locationManager.getLastKnownLocation(provider));
-    }
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
+    //双击返回键退出应用
     long lastClickTime=0;
     @Override
     public void onBackPressed(){
-        //super.onBackPressed();
         if(lastClickTime<=0){
-            Toast.makeText(this,"再按一次返回键退出应用",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),R.string.click_again_tofinish,Toast.LENGTH_SHORT).show();
             lastClickTime= System.currentTimeMillis();
         }else{
             long currentTime=System.currentTimeMillis();
-            if(currentTime-lastClickTime<1000){
-                finish();
-            }
+            if(currentTime-lastClickTime<1000)finish();
             else{
-                Toast.makeText(this,"再按一次返回键退出应用",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.click_again_tofinish,Toast.LENGTH_SHORT).show();
                 lastClickTime=currentTime;
             }
         }
-
     }
+
+    //设置广播过滤器
+    private LocalBroadcastManager localBroadcastManager;
+    private IntentFilter intentFilter;
+    private void registerMyReceiver() {
+        localBroadcastManager=LocalBroadcastManager.getInstance(getApplicationContext());
+        intentFilter=new IntentFilter();
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_AUTO);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_GRAB);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_HAND);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_ARMTS);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_ARMMS);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_ARMBS);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_PTTS);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_PTBS);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_F);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_B);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_S);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_L);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL_R);
+        intentFilter.addAction(Config.BD_SITTING_MANUAL);
+        intentFilter.addAction(Config.BD_SITTING_GRAVITY);
+        intentFilter.addAction(Config.BD_SITTING_INTERATE);
+        intentFilter.addAction(Config.BD_SITTING_RESET);
+        intentFilter.addAction(Config.BD_SITTING_SB_MAX);
+        intentFilter.addAction(Config.BD_SITTING_SB_MIN);
+        intentFilter.addAction(Config.BD_TPWAY);
+        intentFilter.addAction(Config.BD_BTOK);
+        intentFilter.addAction(Config.BD_TEST);
+        intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        localBroadcastManager.registerReceiver(broadcastReceiver,intentFilter);
+    }
+
+    private BroadcastReceiver broadcastReceiver=new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action=intent.getAction();
+            switch (action){
+                case Config.BD_SITTING_MANUAL_AUTO:
+                    str_auto=intent.getStringExtra(Config.KEY_SITTING_AUTO);
+                    break;
+                case Config.BD_SITTING_MANUAL_GRAB:
+                    str_grab=intent.getStringExtra(Config.KEY_SITTING_GRAB);
+                    break;
+                case Config.BD_SITTING_MANUAL_HAND:
+                    str_hand=intent.getStringExtra(Config.KEY_SITTING_HAND);
+                    break;
+                case Config.BD_SITTING_MANUAL_ARMTS:
+                    str_armts=intent.getStringExtra(Config.KEY_SITTING_ARMTS);
+                    break;
+                case Config.BD_SITTING_MANUAL_ARMMS:
+                    str_armms=intent.getStringExtra(Config.KEY_SITTING_ARMMS);
+                    break;
+                case Config.BD_SITTING_MANUAL_ARMBS:
+                    str_armbs=intent.getStringExtra(Config.KEY_SITTING_ARMBS);
+                    break;
+                case Config.BD_SITTING_MANUAL_PTTS:
+                    str_ptts=intent.getStringExtra(Config.KEY_SITTING_PTTS);
+                    break;
+                case Config.BD_SITTING_MANUAL_PTBS:
+                    str_ptbs=intent.getStringExtra(Config.KEY_SITTING_PTBS);
+                    break;
+                case Config.BD_SITTING_MANUAL_F:
+                    str_f=intent.getStringExtra(Config.KEY_SITTING_F);
+                    break;
+                case Config.BD_SITTING_MANUAL_B:
+                    str_b=intent.getStringExtra(Config.KEY_SITTING_B);
+                    break;
+                case Config.BD_SITTING_MANUAL_S:
+                    str_s=intent.getStringExtra(Config.KEY_SITTING_S);
+                    break;
+                case Config.BD_SITTING_MANUAL_L:
+                    str_l=intent.getStringExtra(Config.KEY_SITTING_L);
+                    break;
+                case Config.BD_SITTING_MANUAL_R:
+                    str_r=intent.getStringExtra(Config.KEY_SITTING_R);
+                    break;
+                case Config.BD_SITTING_MANUAL:
+                    str_manual=intent.getStringExtra(Config.KEY_SITTING_MANUAL);
+                    break;
+                case Config.BD_SITTING_GRAVITY:
+                    str_gravity=intent.getStringExtra(Config.KEY_SITTING_GRAVITY);
+                    break;
+                case Config.BD_SITTING_INTERATE:
+                    str_interate=intent.getStringExtra(Config.KEY_SITTING_INTERATE);
+                    break;
+                case Config.BD_SITTING_RESET:
+                    str_reset=intent.getStringExtra(Config.KEY_SITTING_RESET);
+                    break;
+                case Config.BD_SITTING_SB_MAX:
+                    sb_Max=Float.parseFloat(intent.getStringExtra(Config.KEY_SITTING_SB_MAX));
+                    break;
+                case Config.BD_SITTING_SB_MIN:
+                    sb_Min=Float.parseFloat(intent.getStringExtra(Config.KEY_SITTING_SB_MIN));
+                    break;
+                case Config.BD_TPWAY:
+                    tpWay=intent.getStringExtra(Config.KEY_SITTING_TPWAY);
+                    break;
+                case BluetoothDevice.ACTION_ACL_CONNECTED:
+                    //Toast.makeText(getApplicationContext(),"已收到ACL_CONNECTED",Toast.LENGTH_SHORT).show();
+                    //btioStream=new BTIOStream(bluetoothConnection.getBluetoothSocket(),getApplicationContext());
+                    break;
+                case Config.BD_BTOK:
+                    btioStream=new BTIOStream(bluetoothConnection.getBluetoothSocket(),getApplicationContext());
+                    textView_mainAty_tip.setText("已创建输出流");
+                    break;
+                case Config.BD_TEST:
+
+                    break;
+            }
+        }
+    };
+
+
 }
-
-
-
-

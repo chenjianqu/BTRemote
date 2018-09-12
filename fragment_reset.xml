@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:context="com.qu.jian.btremote.Aty.Fragment_reset"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frameLayout_sensor"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="60dp">
+
+    </FrameLayout>
+
+    <TextView
+        android:text="重置模式"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_reset_tip"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/channel_bg"
+        android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_gravity="bottom|right"
+        android:layout_width="60dp">
+
+        <Button
+        android:text="关闭"
+        android:layout_width="wrap_content"
+            android:id="@+id/button_close"
+        android:layout_weight="1"
+        android:background="@color/skyblue"
+        android:textSize="16sp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:text="搜索"
+            android:layout_width="wrap_content"
+            android:id="@+id/button_search"
+            android:layout_weight="1"
+            android:background="@color/skyblue"
+            android:textSize="16sp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:text="蓝牙"
+            android:layout_width="wrap_content"
+            android:id="@+id/button_bluetooth"
+            android:layout_weight="1"
+            android:background="@color/skyblue"
+            android:textSize="16sp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:text="直连"
+            android:layout_width="wrap_content"
+            android:id="@+id/button_video"
+            android:layout_weight="1"
+            android:background="@color/skyblue"
+            android:textSize="16sp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:text="传感器"
+            android:layout_width="wrap_content"
+            android:id="@+id/button_sensor"
+            android:layout_weight="1"
+            android:background="@color/skyblue"
+            android:textSize="16sp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="80dp"
+        android:id="@+id/listView_bt"
+        android:visibility="visible"
+        android:layout_marginTop="130dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/progressBar_searchBT"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="50dp" />
+
+</FrameLayout>

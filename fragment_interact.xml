@@ -1,0 +1,77 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qu.jian.btremote.Aty.Fragment_Interact"
+    android:background="@android:color/background_light">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="50dp">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText_sendText"
+            android:layout_weight="0.34"
+            android:hint="在此输入交互文本"
+            android:textColorHint="@color/skyblue"
+            android:textColor="@color/channel_bg" />
+
+        <Button
+            android:text="M"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_sendMidia"
+            android:layout_weight="0.34"
+            android:background="@color/skyblue"
+            android:textSize="30sp"
+            android:textStyle="normal|bold"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:text="T"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_sendText"
+            android:layout_weight="0.34"
+            android:background="@color/skyblue"
+            android:textSize="31sp"
+            android:textStyle="normal|bold"
+            android:layout_marginBottom="8dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_interact_tip"
+        android:text="@string/long_touch_to_clear_content"
+        android:textColor="@color/channel_bg"
+        android:layout_gravity="top|center_horizontal"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_interact"
+                android:textColor="@color/channel_bg"
+                android:textSize="16sp"
+                android:gravity="bottom"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbarFadeDuration="1000"
+                android:singleLine="false"
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false"
+                android:maxLines="200"
+                android:selectAllOnFocus="true"
+                android:layout_marginTop="30dp" />
+</FrameLayout>

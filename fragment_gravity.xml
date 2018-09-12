@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qu.jian.btremote.Aty.Fragment_gravity"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="0dp"
+    android:id="@+id/frameLayout"
+    android:background="@android:color/white">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_sensorValue"
+        android:textColor="@color/skyblue"
+        android:textSize="80sp"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        android:id="@+id/imageView_cursor"
+        android:layout_marginBottom="60dp"
+        android:rotation="0"
+        android:layout_gravity="bottom|left" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_gravity_tip"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textDirection="inherit"
+        android:textSize="16sp"
+        android:text="重力感应模式"
+        android:textColor="@color/channel_bg"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:text="+"
+        android:layout_width="60dp"
+        android:id="@+id/button_gravity_accerelate"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|right"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:background="@color/skyblue" />
+
+    <Button
+        android:text="-"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/button_gravity_decelerate"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:background="@color/skyblue" />
+    <Button
+        android:text="S"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/button_gravity_stop"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        android:background="@color/skyblue" />
+
+</FrameLayout>

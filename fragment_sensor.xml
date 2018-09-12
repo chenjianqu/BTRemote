@@ -1,0 +1,397 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qu.jian.btremote.Aty.Fragment_sensor"
+    android:background="@color/bg_2">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_gps"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_gps"
+                    android:layout_weight="1"
+                    android:text="定位服务"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="100dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="定位提供者：\n纬度：\n经度：\n高度：\n速度："
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_gps"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="100dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_gra"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_gra"
+                    android:layout_weight="1"
+                    android:text="重力传感器"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="X轴：\nY轴：\nZ轴："
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_gra"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_ac"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_ac"
+                    android:layout_weight="1"
+                    android:text="加速度传感器"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="150dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="X轴：\nY轴：\nZ轴："
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_ac"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_lac">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_lac"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="线性加速度传感器"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="150dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="X轴：\nY轴：\nZ轴："
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_lac"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_gy">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_gy"
+                    android:layout_weight="1"
+                    android:text="陀螺仪"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="X轴：\nY轴：\nZ轴："
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_gy"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_geo">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_geo"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="地磁传感器"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="X轴：\nY轴：\nZ轴：" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_geo"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_ori">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_ori"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="方向传感器"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="X轴：\nY轴：\nZ轴："
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_ori"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_li">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_li"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="光线传感器"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:text="值"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_li"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_pre">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_pre"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="压力传感器"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:text="值"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_pre"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_pro">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_pro"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="距离传感器"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:text="值"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_pro"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white_some"
+                android:id="@+id/layout_sensor_tem">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_msg_tem"
+                    android:layout_weight="1"
+                    android:textColor="@color/skyblue"
+                    android:textSize="20sp"
+                    android:text="温度传感器"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:text="值"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sensor_value_tem"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:gravity="right"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

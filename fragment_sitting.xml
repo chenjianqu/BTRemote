@@ -1,0 +1,788 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qu.jian.btremote.Aty.Fragment_sitting"
+    android:background="@color/bg_2">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:text="设置模式"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_sitting_tip"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/channel_bg"
+        android:layout_gravity="center_horizontal" />
+
+    <ScrollView android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="200dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_sitting_maunal_order">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="AUTO"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_auto"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="GRAB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_grab"
+                    android:textColor="@color/skyblue"
+                    android:inputType="text"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="HANDS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_hands"
+                    android:textColor="@color/skyblue"
+                    android:inputType="text"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="ARMTS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_armts"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="ARMMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_armms"
+                    android:textColor="@color/skyblue"
+                    android:inputType="text"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="ARMBS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_armbs"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="PTTS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_ptts"
+                    android:textColor="@color/skyblue"
+                    android:inputType="text"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="PTBS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_ptbs"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="F"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_F"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_S"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:inputType="text"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="L"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_L"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="R"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_R"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:inputType="text"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="B"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_B"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="交互模式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_Interate"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="手动模式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_Manual"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="重力模式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_Gravity"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:text="复位模式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_Reset"
+                    android:textColor="@color/skyblue"
+                    android:layout_width="100dp"
+                    android:hint="发送值"
+                    android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:text="控制流"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.64"
+                android:textColorHighlight="@color/channel_bg"
+                android:textSize="16sp"
+                android:textColor="@color/channel_bg"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:id="@+id/textView_sitting_TransportWay" />
+
+            <Switch
+                android:text="自动连接上次蓝牙"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/switch_sitting_auto_net_BT"
+                android:textColor="@color/channel_bg"
+                android:textSize="16sp" />
+
+            <Switch
+                android:text="自动直连上次WIFI"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/switch_sitting_auto_net_wifi"
+                android:textColor="@color/channel_bg"
+                android:textSize="16sp" />
+
+            <Switch
+                android:text="启用视频流"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/switch_sitting_video"
+                android:textColor="@color/channel_bg"
+                android:textSize="16sp"
+                android:gravity="center_vertical|center_horizontal|start" />
+
+            <TextView
+                android:text="事件指令"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.64"
+                android:textColorHighlight="@color/channel_bg"
+                android:textSize="16sp"
+                android:textColor="@color/channel_bg"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:id="@+id/textView_sitting_manualOrder" />
+
+            <TextView
+                android:text="拖动条极值    "
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.03"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/channel_bg"
+                android:id="@+id/textView_sitting_seekbar" />
+
+            <TextView
+                android:text="重力轴选择"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.64"
+                android:textColorHighlight="@color/channel_bg"
+                android:textSize="16sp"
+                android:textColor="@color/channel_bg"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:id="@+id/textView_sitting_gravitymode" />
+
+            <TextView
+                android:text="重力轴极值"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/channel_bg"
+                android:id="@+id/textView_sitting_gravityvalue" />
+            <TextView
+                android:text="重力模式加减控制值"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/channel_bg"
+                android:id="@+id/textView_sitting_gravityInt" />
+
+
+            <Button
+                android:text="退出应用"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/button_sitting_exit"
+                android:textColor="@color/channel_bg"
+                android:background="@color/bg_2"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/radioGroup_transportWay">
+
+                <RadioButton
+                    android:text="WIFI直连"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/radioButton_onlyWIFID"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:text="蓝牙"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:id="@+id/radioButton_WifiAndBt"
+                    android:layout_weight="1"
+                    android:textColor="@color/channel_bg"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.64"
+                android:textSize="16sp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.64"
+                android:textSize="16sp"
+                android:gravity="center_vertical"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:id="@+id/layout_sitting_seekbarMaxmin">
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_seekbarMin"
+                    android:layout_weight="1"
+                    android:hint="最小值"
+                    android:layout_width="match_parent" />
+
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editText_sitting_seekbarMax"
+                    android:layout_weight="1"
+                    android:hint="最大值"
+                    android:layout_width="match_parent" />
+            </LinearLayout>
+
+            <Spinner
+                android:layout_height="50dp"
+                android:id="@+id/spinner_gravity_mode"
+                android:layout_width="match_parent"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/layout_sitting_gravityMaxMin"
+                android:layout_height="100dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <EditText
+                        android:layout_height="50dp"
+                        android:inputType="text"
+                        android:ems="10"
+                        android:id="@+id/editText_sitting_char_gravity_flag"
+                        android:textColor="@color/skyblue"
+                        android:layout_width="match_parent"
+                        android:hint="数字标识符"
+                        android:textColorHint="?android:attr/textColorHighlightInverse"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:layout_height="match_parent"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editText_sitting_gravityMin"
+                            android:layout_weight="1"
+                            android:hint="最小值"
+                            android:layout_width="40dp" />
+
+                        <EditText
+                            android:layout_height="match_parent"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editText_sitting_gravityMax"
+                            android:layout_weight="1"
+                            android:hint="最大值"
+                            android:layout_width="40dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_sitting_GnMaxMin">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_height="50dp"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editText_sitting_gra_add"
+                            android:textColor="@color/skyblue"
+                            android:layout_width="match_parent"
+                            android:hint="ADD"
+                            android:textColorHint="?android:attr/textColorHighlightInverse"
+                            android:layout_weight="1" />
+
+                        <EditText
+                            android:layout_height="50dp"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:id="@+id/editText_sitting_gra_sub"
+                            android:textColor="@color/skyblue"
+                            android:layout_width="match_parent"
+                            android:hint="SUB"
+                            android:textColorHint="?android:attr/textColorHighlightInverse"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:text="保存配置"
+                android:layout_width="match_parent"
+                android:id="@+id/button_save_order_sitting"
+                android:background="@color/skyblue"
+                android:layout_height="50dp"
+                android:textColor="@color/bg_2"
+                android:layout_weight="1"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
